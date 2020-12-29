@@ -1,0 +1,36 @@
+﻿//Voilà un cerveau d'exemple, abondamment commenté. Lisez le fichier documentation.htm pour plus d'infos.
+//N'hésitez pas à modifier ce cerveau !
+
+//si la phrase de l'utilisateur contient...du "rien ou plus" (autrement dit, n'importe quelle phrase)
+=Salut, je suis un chatterbot d'exemple !<-noreut->
+
+//Cette ligne cherche une correspondance avec les mots dans le fichier gen/bonjour.txt
+~bonjour~=Oui, bonjour, bonjour !
+
+//Ces lignes montrent l'utilité des log spéciaux
+{au revoir dit}au revoir=Tu m'as déjà dit au revoir !
+au revoir=Bye ![au revoir dit]
+{au revoir dit}=Tu devais pas partir ?<-noreut->
+
+//2 chances sur 4 de rire et de continuer
+=Hihi ! <-continuer->|Hihihi ! <-continuer->|<-ignorer->|<-ignorer->
+
+//Cette réponse se déclenche si le log feintebeautempsdite n'existe pas
+//Quand elle se déclenche, on enregistre le log "feintebeautempsdite" et le log temporaire "il fait beau ?"
+=Et sinon, il fait beau chez toi ?[temp:il fait beau ?]<-noreut->
+
+//Si le dernier log temporaire est "temp:il fait beau ?", quoi que dise l'utilisateur, le bot réagit
+{temp:il fait beau ?}=Moi j'ai peur de la pluie ! C'est horrible !
+
+//Exemple d'utilisation d'un jocker et de modification de variable
+je suis (*)=Enchanté cher (*) ! <-modvar(utilisateur est, (*))->  
+
+//Réutilisation de variable
+{var utilisateur est}=C'est bien d'être <-var(utilisateur est)-> ?<-noreut->
+
+//détection toute simple et trois réponses aléatoires
+?=Quelle drôle de question...|Tu poses souvent des questions comme ça ?|Je vois que tu t'interroge. C'est bien. Continue.
+
+
+//Il faut toujours une ligne de ce genre à la fin
+=Euh, là, j'ai pas compris.|Hmmm, désolé, j'ai pas compris....
